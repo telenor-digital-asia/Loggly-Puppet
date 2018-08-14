@@ -30,6 +30,7 @@ class loggly (
   $base_dir   = $loggly::params::base_dir,
   $enable_tls = $loggly::params::enable_tls,
   $cert_path  = undef,
+  $tags       = $loggly::params::tags,
 ) inherits loggly::params {
 
   $_cert_path = pick($cert_path, "${base_dir}/certs")
@@ -37,6 +38,7 @@ class loggly (
   validate_absolute_path($base_dir)
   validate_absolute_path($_cert_path)
   validate_bool($enable_tls)
+  validate_array($tags)
 
   # create directory for loggly support files
   file { $base_dir:
